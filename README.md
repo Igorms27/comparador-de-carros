@@ -12,4 +12,8 @@ Um site desenvolvido em **Angular** para comparar modelos de carros, utilizando 
 ## 🛠️ Tecnologias Utilizadas  
 - **Angular** → Estruturação e desenvolvimento do frontend  
 - **Chart.js** → Geração dos gráficos de depreciação  
-- **API da Tabela FIPE** → Obtenção dos valores atualizados dos veículos 
+- **API da Tabela FIPE** → Obtenção dos valores atualizados dos veículos
+
+## 🚀 Link do projeto
+- https://comparador-de-carros.pages.dev
+

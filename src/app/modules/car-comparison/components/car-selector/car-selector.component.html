@@ -1,0 +1,91 @@
+<div class="car-selector">
+  <h3>{{ title }}</h3>
+
+  <div class="select-group">
+    <label for="brandSearch">Marca do Veículo:</label>
+    <div class="autocomplete-container">
+      <div class="search-wrapper">
+        <input
+          type="text"
+          id="brandSearch"
+          [(ngModel)]="brandSearch"
+          (input)="filterBrands()"
+          (focus)="showBrandSuggestions = true"
+          placeholder="Digite a marca..."
+          class="search-input"
+        />
+        <span class="search-icon">🔍</span>
+      </div>
+      <div class="suggestions-container" *ngIf="showBrandSuggestions && filteredBrands.length > 0">
+        <div
+          *ngFor="let brand of filteredBrands"
+          class="suggestion-item"
+          (click)="selectBrand(brand)"
+          [class.active]="brand.codigo === selectedBrand"
+        >
+          {{ brand.nome }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="select-group" *ngIf="selectedBrand">
+    <label for="modelSearch">Modelo do Veículo:</label>
+    <div class="autocomplete-container">
+      <div class="search-wrapper">
+        <input
+          type="text"
+          id="modelSearch"
+          [(ngModel)]="modelSearch"
+          (input)="filterModels()"
+          (focus)="showModelSuggestions = true"
+          placeholder="Digite o modelo..."
+          class="search-input"
+        />
+        <span class="search-icon">🔍</span>
+      </div>
+      <div class="suggestions-container" *ngIf="showModelSuggestions && filteredModels.length > 0">
+        <div
+          *ngFor="let model of filteredModels"
+          class="suggestion-item"
+          (click)="selectModel(model)"
+          [class.active]="model.codigo === selectedModel"
+        >
+          {{ model.nome }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="select-group" *ngIf="selectedModel">
+    <label for="yearSearch">Ano do Veículo:</label>
+    <div class="autocomplete-container">
+      <div class="search-wrapper">
+        <input
+          type="text"
+          id="yearSearch"
+          [(ngModel)]="yearSearch"
+          (input)="filterYears()"
+          (focus)="showYearSuggestions = true"
+          placeholder="Digite o ano..."
+          class="search-input"
+        />
+        <span class="search-icon">🔍</span>
+      </div>
+      <div class="suggestions-container" *ngIf="showYearSuggestions && filteredYears.length > 0">
+        <div
+          *ngFor="let year of filteredYears"
+          class="suggestion-item"
+          (click)="selectYear(year)"
+          [class.active]="year.codigo === selectedYear"
+        >
+          {{ year.nome }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="error && !isRestoring" class="error">
+    {{ error }}
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="container">
+  <h1>Comparador de Preços FIPE</h1>
+
+  <div class="history-button-container" *ngIf="hasHistory">
+    <button class="history-button" (click)="restoreLastComparison()">
+      <span class="icon">↺</span>
+      Restaurar última comparação
+    </button>
+  </div>
+
+  <div class="comparison-container">
+    <app-car-selector
+      title="Primeiro Veículo"
+      (carSelected)="onFirstCarSelected($event)"
+    ></app-car-selector>
+
+    <app-car-selector
+      title="Segundo Veículo"
+      (carSelected)="onSecondCarSelected($event)"
+    ></app-car-selector>
+  </div>
+
+  <div class="comparison-details" *ngIf="firstCar && secondCar">
+    <h2>Comparação dos Veículos</h2>
+    <table>
+      <tr>
+        <th>Característica</th>
+        <th>{{ firstCar.Marca }}</th>
+        <th>{{ secondCar.Marca }}</th>
+      </tr>
+      <tr>
+        <td><strong>Modelo</strong></td>
+        <td>{{ firstCar.Modelo }}</td>
+        <td>{{ secondCar.Modelo }}</td>
+      </tr>
+      <tr>
+        <td><strong>Ano</strong></td>
+        <td>{{ firstCar.AnoModelo }}</td>
+        <td>{{ secondCar.AnoModelo }}</td>
+      </tr>
+      <tr>
+        <td><strong>Preço</strong></td>
+        <td [style.color]="getValueColor(firstCar.Valor, secondCar.Valor)">
+          {{ firstCar.Valor }}
+        </td>
+        <td [style.color]="getValueColor(secondCar.Valor, firstCar.Valor)">
+          {{ secondCar.Valor }}
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Combustível</strong></td>
+        <td>{{ firstCar.Combustivel }}</td>
+        <td>{{ secondCar.Combustivel }}</td>
+      </tr>
+      <tr>
+        <td><strong>Código FIPE</strong></td>
+        <td>{{ firstCar.CodigoFipe }}</td>
+        <td>{{ secondCar.CodigoFipe }}</td>
+      </tr>
+      <tr>
+        <td><strong>Mês Referência</strong></td>
+        <td>{{ firstCar.MesReferencia }}</td>
+        <td>{{ secondCar.MesReferencia }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <app-car-chart
+    *ngIf="firstCar && secondCar"
+    [firstCar]="firstCar"
+    [secondCar]="secondCar"
+  ></app-car-chart>
+</div>

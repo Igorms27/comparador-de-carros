@@ -1,0 +1,54 @@
+<div class="chart-container" *ngIf="firstCar && secondCar">
+  <h3>Comparação de Desvalorização</h3>
+
+  <div class="summary-cards">
+    <div class="summary-card first-car">
+      <div class="depreciation-info">
+        <div class="depreciation-value">{{ firstCar.depreciationPercentage?.toFixed(1) }}%</div>
+        <div class="depreciation-label">
+          de desvalorização desde {{ getManufactureYear(firstCar) }}
+        </div>
+        <div class="price-comparison">
+          <div class="price-item">
+            <div class="price-year">{{ getManufactureYear(firstCar) }}</div>
+            <div class="price-value">{{ formatCurrency(firstCar.historicalPrices![0].price) }}</div>
+          </div>
+          <div class="price-arrow">→</div>
+          <div class="price-item">
+            <div class="price-year">{{ currentYear }}</div>
+            <div class="price-value">{{ firstCar.Valor }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-card second-car">
+      <div class="depreciation-info">
+        <div class="depreciation-value">{{ secondCar.depreciationPercentage?.toFixed(1) }}%</div>
+        <div class="depreciation-label">
+          de desvalorização desde {{ getManufactureYear(secondCar) }}
+        </div>
+        <div class="price-comparison">
+          <div class="price-item">
+            <div class="price-year">{{ getManufactureYear(secondCar) }}</div>
+            <div class="price-value">
+              {{ formatCurrency(secondCar.historicalPrices![0].price) }}
+            </div>
+          </div>
+          <div class="price-arrow">→</div>
+          <div class="price-item">
+            <div class="price-year">{{ currentYear }}</div>
+            <div class="price-value">{{ secondCar.Valor }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    * Os percentuais de desvalorização são valores aproximados e podem conter variações em relação
+    aos valores reais do mercado.
+  </div>
+
+  <canvas #chartCanvas></canvas>
+</div>

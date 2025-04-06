@@ -1,0 +1,7 @@
+[build]
+command = "CI=false yarn install --immutable && yarn build"
+publish = "dist/demo"
+
+[build.environment]
+NODE_VERSION = "18"
+YARN_VERSION = "1.22.22" 

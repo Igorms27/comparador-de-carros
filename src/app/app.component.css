@@ -248,51 +248,30 @@
   color: white;
   padding: 3rem 2rem 1.5rem;
   margin-top: 4rem;
-  width: 100%;
-  box-sizing: border-box;
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 0;
-  position: relative;
-  border-bottom: 0;
-}
-
-body {
-  overflow-x: hidden;
-}
-
-/* Adicionar clear:both para evitar problemas de layout */
-.app-footer::before {
-  content: '';
-  display: table;
-  clear: both;
 }
 
 .footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3rem;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .footer-section {
   flex: 1;
-  min-width: 250px;
 }
 
 .footer-section h3 {
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
+  color: white;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
   position: relative;
-  padding-bottom: 0.75rem;
 }
 
 .footer-section h3::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -10px;
   left: 0;
   width: 40px;
   height: 3px;
@@ -301,14 +280,12 @@ body {
 }
 
 .footer-section p {
-  color: #e2e8f0;
   line-height: 1.6;
 }
 
 .footer-section ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
 .footer-section ul li {
@@ -322,86 +299,17 @@ body {
 }
 
 .footer-section ul li a:hover {
-  color: #3b82f6;
+  color: white;
 }
 
 .footer-bottom {
-  max-width: 1200px;
-  margin: 2rem auto 0;
-  padding-top: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
   text-align: center;
-  color: #9ca3af;
   font-size: 0.875rem;
+  color: #cbd5e1;
 }
 
-/* Detalhes da comparação */
-.comparison-details {
-  background: white;
-  border-radius: 16px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  animation: fadeIn 0.5s ease-out;
-}
-
-.comparison-details h2 {
-  color: #2563eb;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-th,
-td {
-  padding: 1rem;
-  text-align: left;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-th {
-  background-color: #f3f4f6;
-  font-weight: 600;
-}
-
-/* Botão de histórico */
-.history-button-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2rem;
-}
-
-.history-button {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-}
-
-.history-button:hover {
-  background: #1d4ed8;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35);
-}
-
-.icon {
-  font-size: 1.25rem;
-}
-
-/* Efeitos Visuais */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -413,201 +321,30 @@ th {
   }
 }
 
-/* Ajustes para telas pequenas */
+/* Responsividade */
 @media (max-width: 768px) {
   .container {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .app-title {
     font-size: 1.5rem;
   }
 
-  .app-title::after {
-    width: 80px;
-    height: 3px;
-  }
-
-  .selector-container {
-    flex-direction: column;
-  }
-
-  .selector-item {
-    width: 100%;
-    min-width: auto;
-  }
-
-  .comparison-container {
-    grid-template-columns: 1fr;
-  }
-
-  .step,
-  .tip {
-    min-width: 100%;
-  }
-
   .footer-section {
-    min-width: 100%;
+    text-align: center;
   }
 
-  .how-it-works {
-    padding: 1.5rem 1rem;
+  .footer-section h3::after {
+    left: 50%;
+    transform: translateX(-50%);
   }
 
-  .steps-container {
-    flex-direction: column;
-  }
-
-  .step {
-    margin-bottom: 1.5rem;
-  }
-
-  .chart-preview,
-  .buying-tips,
-  .fipe-info,
-  .comparison-details {
-    padding: 1.5rem 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .empty-chart {
-    height: 200px;
-  }
-
-  /* Melhora visualização de tabelas em dispositivos móveis */
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-    font-size: 0.9rem;
-    border-radius: 8px;
-  }
-
-  th,
-  td {
-    padding: 0.75rem;
-  }
-
-  /* Ajuste para os cards de dicas */
-  .tips-container {
-    flex-direction: column;
-  }
-
-  .tip {
-    margin-bottom: 1rem;
-  }
-
-  /* Ajuste do rodapé para telas pequenas */
   .app-footer {
     padding: 2rem 1rem 1rem;
   }
 
   .footer-content {
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  /* Melhora botão para toque em dispositivos móveis */
-  .link-button,
-  .history-button {
-    padding: 0.8rem 1.2rem;
-    width: 100%;
-    text-align: center;
-    justify-content: center;
-  }
-}
-
-/* Ajustes para telas muito pequenas (smartphones) */
-@media (max-width: 480px) {
-  .app-title {
-    font-size: 1.25rem;
-  }
-
-  h2 {
-    font-size: 1.2rem;
-  }
-
-  .step-number {
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
-  }
-
-  .chart-icon {
-    font-size: 2.5rem;
-  }
-
-  .chart-placeholder p {
-    font-size: 0.9rem;
-  }
-
-  .comparison-details {
-    overflow-x: auto;
-  }
-}
-
-/* Estilo para tabelas responsivas em qualquer tamanho de tela */
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-}
-
-/* Estilos para inputs em dispositivos touch */
-input,
-select,
-button {
-  font-size: 16px; /* Evita zoom automático em iOS */
-}
-
-@media (hover: none) {
-  /* Ajustes específicos para dispositivos com touch (sem hover) */
-  .link-button,
-  .history-button,
-  .tip {
-    cursor: pointer;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-
-  .tip:active {
-    background-color: #f1f5fd;
-  }
-
-  input:focus,
-  select:focus,
-  button:focus {
-    outline: none;
-  }
-}
-
-/* Ajustes para a orientação paisagem em dispositivos móveis */
-@media (max-width: 896px) and (orientation: landscape) {
-  .container {
-    padding: 1rem;
-  }
-
-  .app-title {
-    margin-bottom: 1rem;
-  }
-
-  .how-it-works {
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-  }
-
-  .step-number {
-    margin-bottom: 0.5rem;
-  }
-
-  .selector-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .empty-chart {
-    height: 150px;
+    gap: 1.5rem;
   }
 }

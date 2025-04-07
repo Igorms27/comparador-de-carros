@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
+import { AnimatedBackgroundComponent } from './core/components/animated-background/animated-background.component';
 import { Car, CarComparison } from './core/models/car.model';
 import { CarChartComponent } from './modules/car-comparison/components/car-chart/car-chart.component';
 import { CarSelectorComponent } from './modules/car-comparison/components/car-selector/car-selector.component';
@@ -8,7 +9,7 @@ import { CarSelectorComponent } from './modules/car-comparison/components/car-se
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, CarSelectorComponent, CarChartComponent],
+  imports: [CommonModule, CarSelectorComponent, CarChartComponent, AnimatedBackgroundComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
@@ -88,5 +89,23 @@ export class AppComponent {
       selectors[0].dispatchEvent(firstCarEvent);
       selectors[1].dispatchEvent(secondCarEvent);
     }
+  }
+
+  /**
+   * Carrega e inicia uma comparação popular pré-definida
+   * @param brand1 Marca do primeiro veículo
+   * @param brand2 Marca do segundo veículo
+   * @param model1 Modelo do primeiro veículo
+   * @param model2 Modelo do segundo veículo
+   */
+  public loadPopularComparison(
+    brand1: string,
+    brand2: string,
+    model1: string,
+    model2: string
+  ): void {
+    // Esta é uma implementação simplificada que exibe uma mensagem
+    // console.log(`Carregando comparação: ${brand1} ${model1} vs ${brand2} ${model2}`);
+    alert(`Recurso em desenvolvimento: Comparação entre ${brand1} ${model1} e ${brand2} ${model2}`);
   }
 }

@@ -1,0 +1,138 @@
+/* Estilos globais para melhorar a experiência em dispositivos móveis */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+  border: 0;
+  scrollbar-width: thin; /* Para Firefox */
+  scrollbar-color: rgba(37, 99, 235, 0.5) transparent; /* Para Firefox */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #eef4ff;
+  background-image: linear-gradient(to bottom, #f8faff, #e6f0ff);
+  position: relative;
+  color: #333;
+  overflow-y: auto !important;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* Melhorar o foco nos elementos interativos para acessibilidade */
+button:focus,
+a:focus,
+input:focus,
+select:focus {
+  outline: 2px solid rgba(37, 99, 235, 0.5);
+  outline-offset: 2px;
+}
+
+button:active,
+a:active {
+  transform: scale(0.98);
+}
+
+/* Evita que usuários precisem dar duplo tap em dispositivos móveis */
+@media (pointer: coarse) {
+  a,
+  button {
+    padding: 0.8rem;
+  }
+}
+
+/* Esconde a barra de rolagem no Chrome/Safari */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(37, 99, 235, 0.5);
+  border-radius: 20px;
+}
+
+/* Ajusta os espaçamentos para telas pequenas */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Ajuste para melhorar a visibilidade do fundo animado */
+.car-selector,
+.how-it-works,
+.chart-preview,
+.buying-tips,
+.fipe-info,
+.comparison-details {
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Correção definitiva para o espaço em branco no rodapé */
+html {
+  height: 100%;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100vh;
+}
+
+.footer-wrapper {
+  position: relative;
+  margin-bottom: -5px !important;
+}

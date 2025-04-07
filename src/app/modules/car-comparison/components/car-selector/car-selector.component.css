@@ -8,6 +8,8 @@
   backdrop-filter: blur(10px);
   position: relative;
   z-index: 20;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .car-selector:hover {
@@ -54,14 +56,28 @@
   z-index: 20;
 }
 
+.select-group.dropdown-open {
+  z-index: 1000 !important;
+  position: relative;
+}
+
+.select-group.dropdown-open .suggestions-container {
+  z-index: 1001;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
 .autocomplete-container {
   position: relative;
+  width: 100%;
 }
 
 .search-wrapper {
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .search-icon {
@@ -85,6 +101,7 @@
   transition: all 0.3s ease;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
 }
 
 .search-input:focus {
@@ -108,9 +125,11 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   max-height: 250px;
   overflow-y: auto;
-  z-index: 100;
+  z-index: 1000;
   margin-top: 0.25rem;
   border: 1px solid #e5e7eb;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .suggestion-item {
@@ -146,4 +165,117 @@ label {
   font-weight: 500;
   color: #4b5563;
   font-size: 0.875rem;
+}
+
+.brand-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+  padding: 2px;
+}
+
+.suggestion-item:hover .brand-logo,
+.suggestion-item.active .brand-logo {
+  background-color: #e6effd;
+}
+
+.input-with-logo {
+  position: relative;
+  width: 100%;
+}
+
+.input-logo {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  z-index: 10;
+}
+
+.search-input.with-logo {
+  padding-left: 42px;
+}
+
+.car-icon {
+  font-size: 18px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  z-index: 10;
+}
+
+.search-input.with-logo {
+  padding-left: 38px;
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width: 768px) {
+  .car-selector {
+    padding: 1.25rem;
+  }
+
+  .car-selector h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .select-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .search-input {
+    padding: 0.7rem 2.2rem 0.7rem 0.7rem;
+    font-size: 16px; /* Evita zoom automático em iOS */
+  }
+
+  .search-input.with-logo {
+    padding-left: 36px;
+  }
+
+  .input-icon {
+    font-size: 16px;
+    left: 10px;
+  }
+
+  .search-icon {
+    right: 0.7rem;
+  }
+
+  .suggestions-container {
+    max-height: 200px;
+  }
+
+  .suggestion-item {
+    padding: 0.7rem;
+  }
+}
+
+/* Garantir que o dropdown não saia da tela em dispositivos menores */
+@media (max-width: 480px) {
+  .select-group.dropdown-open .suggestions-container {
+    position: fixed;
+    top: auto;
+    left: 10px;
+    right: 10px;
+    max-height: 50vh;
+    z-index: 2000;
+  }
 }

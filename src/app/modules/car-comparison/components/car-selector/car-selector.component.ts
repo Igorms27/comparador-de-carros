@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { Brand, Model, Year, Car } from '../../../../core/models/car.model';
+import { CarLogoService } from '../../../../core/services/car-logo.service';
 import { FipeService } from '../../../../core/services/fipe.service';
 
 interface RestoreData {
@@ -49,7 +50,10 @@ export class CarSelectorComponent implements OnInit {
   public error: string = '';
   public isRestoring: boolean = false;
 
-  constructor(private fipeService: FipeService) {
+  constructor(
+    private fipeService: FipeService,
+    private carLogoService: CarLogoService
+  ) {
     // Inicializa o carregamento das marcas quando o componente é criado
     this.loadBrands();
   }
@@ -236,5 +240,26 @@ export class CarSelectorComponent implements OnInit {
         }
       }
     );
+  }
+
+  /**
+   * Retorna a URL do logo da marca
+   * @param brand Nome da marca
+   * @returns URL da imagem do logo
+   */
+  public getBrandLogo(brand: string): string {
+    return this.carLogoService.getLogoUrl(brand);
+  }
+
+  /**
+   * Escuta cliques no documento para fechar os dropdowns
+   */
+  @HostListener('document:click', ['$event'])
+  public clickOutside(event: MouseEvent): void {
+    if (!(event.target as HTMLElement).closest('.car-selector')) {
+      this.showBrandSuggestions = false;
+      this.showModelSuggestions = false;
+      this.showYearSuggestions = false;
+    }
   }
 }

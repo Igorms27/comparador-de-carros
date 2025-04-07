@@ -1,19 +1,26 @@
 <div class="car-selector">
   <h3>{{ title }}</h3>
 
-  <div class="select-group">
+  <div
+    class="select-group"
+    [class.dropdown-open]="showBrandSuggestions && filteredBrands.length > 0"
+  >
     <label for="brandSearch">Marca do Veículo:</label>
     <div class="autocomplete-container">
       <div class="search-wrapper">
-        <input
-          type="text"
-          id="brandSearch"
-          [(ngModel)]="brandSearch"
-          (input)="filterBrands()"
-          (focus)="showBrandSuggestions = true"
-          placeholder="Digite a marca..."
-          class="search-input"
-        />
+        <div class="input-with-logo" [class.has-logo]="selectedBrand">
+          <span *ngIf="selectedBrand" class="input-icon">🚗</span>
+          <input
+            type="text"
+            id="brandSearch"
+            [(ngModel)]="brandSearch"
+            (input)="filterBrands()"
+            (focus)="showBrandSuggestions = true"
+            placeholder="Digite a marca..."
+            class="search-input"
+            [class.with-logo]="selectedBrand"
+          />
+        </div>
         <span class="search-icon">🔍</span>
       </div>
       <div class="suggestions-container" *ngIf="showBrandSuggestions && filteredBrands.length > 0">
@@ -23,13 +30,20 @@
           (click)="selectBrand(brand)"
           [class.active]="brand.codigo === selectedBrand"
         >
-          {{ brand.nome }}
+          <div class="brand-item">
+            <span class="car-icon">🚗</span>
+            <span>{{ brand.nome }}</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="select-group" *ngIf="selectedBrand">
+  <div
+    class="select-group"
+    *ngIf="selectedBrand"
+    [class.dropdown-open]="showModelSuggestions && filteredModels.length > 0"
+  >
     <label for="modelSearch">Modelo do Veículo:</label>
     <div class="autocomplete-container">
       <div class="search-wrapper">
@@ -57,7 +71,11 @@
     </div>
   </div>
 
-  <div class="select-group" *ngIf="selectedModel">
+  <div
+    class="select-group"
+    *ngIf="selectedModel"
+    [class.dropdown-open]="showYearSuggestions && filteredYears.length > 0"
+  >
     <label for="yearSearch">Ano do Veículo:</label>
     <div class="autocomplete-container">
       <div class="search-wrapper">

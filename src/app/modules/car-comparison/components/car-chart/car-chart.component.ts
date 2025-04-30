@@ -9,7 +9,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 
-import { Chart, registerables, TooltipItem } from 'chart.js';
+import { Chart, registerables, TooltipItem, ChartItem } from 'chart.js';
 
 import { Car } from '../../../../core/models/car.model';
 
@@ -29,145 +29,127 @@ export class CarChartComponent implements OnChanges, AfterViewInit {
 
   public chart: Chart | null = null;
   public currentYear: number = new Date().getFullYear();
+  public years: string[] = [];
+  public firstCarPrices: number[] = [];
+  public secondCarPrices: number[] = [];
 
   public ngAfterViewInit(): void {
     if (this.firstCar && this.secondCar) {
+      this.prepareChartData();
       this.renderChart();
     }
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['firstCar'] || changes['secondCar']) && this.firstCar && this.secondCar) {
+      this.prepareChartData();
       if (this.chartCanvas) {
         this.renderChart();
       }
     }
   }
 
-  public renderChart(): void {
-    if (!this.firstCar.historicalPrices || !this.secondCar.historicalPrices) {
-      return;
+  private prepareChartData(): void {
+    if (this.firstCar.historicalPrices && this.secondCar.historicalPrices) {
+      // Obter anos para o eixo X (usando o primeiro carro como referência)
+      this.years = this.firstCar.historicalPrices.map(item => item.year.toString());
+      this.firstCarPrices = this.firstCar.historicalPrices.map(item => item.price);
+      this.secondCarPrices = this.secondCar.historicalPrices.map(item => item.price);
     }
+  }
+
+  public renderChart(): void {
+    if (!this.firstCar || !this.secondCar) return;
 
     const ctx = this.chartCanvas.nativeElement.getContext('2d');
-    if (!ctx) return;
+    if (!ctx) return; // Proteção contra contexto nulo
 
-    // Destruir gráfico anterior se existir
+    // Se já existe um gráfico, destrua-o
     if (this.chart) {
       this.chart.destroy();
     }
 
-    // Obter anos para o eixo X (usando o primeiro carro como referência)
-    const years = this.firstCar.historicalPrices.map(item => item.year.toString());
-
-    // Configurar cores
-    const firstCarColor = '#2563eb'; // Azul
-    const secondCarColor = '#16a34a'; // Verde
-
-    // Criar novo gráfico
-    this.chart = new Chart(ctx, {
+    // Configurações do gráfico
+    this.chart = new Chart(this.chartCanvas.nativeElement as ChartItem, {
       type: 'line',
       data: {
-        labels: years,
+        labels: this.years,
         datasets: [
           {
-            label: this.firstCar.Modelo,
-            data: this.firstCar.historicalPrices.map(item => item.price),
-            borderColor: firstCarColor,
-            backgroundColor: this.hexToRgba(firstCarColor, 0.1),
-            fill: true,
+            label: `${this.firstCar.Marca} ${this.firstCar.Modelo}`,
+            data: this.firstCarPrices,
+            borderColor: '#2563eb',
+            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+            borderWidth: 2,
             tension: 0.3,
-            borderWidth: 3,
-            pointRadius: 4,
-            pointHoverRadius: 6,
+            fill: true,
           },
           {
-            label: this.secondCar.Modelo,
-            data: this.secondCar.historicalPrices.map(item => item.price),
-            borderColor: secondCarColor,
-            backgroundColor: this.hexToRgba(secondCarColor, 0.1),
-            fill: true,
+            label: `${this.secondCar.Marca} ${this.secondCar.Modelo}`,
+            data: this.secondCarPrices,
+            borderColor: '#16a34a',
+            backgroundColor: 'rgba(22, 163, 74, 0.1)',
+            borderWidth: 2,
             tension: 0.3,
-            borderWidth: 3,
-            pointRadius: 4,
-            pointHoverRadius: 6,
+            fill: true,
           },
         ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        interaction: {
-          mode: 'index',
-          intersect: false,
-        },
         plugins: {
-          title: {
-            display: false,
-          },
           legend: {
             position: 'top',
             labels: {
-              boxWidth: 12,
+              boxWidth: 15,
               usePointStyle: true,
               pointStyle: 'circle',
-              padding: 20,
               font: {
-                size: 13,
+                size: 12,
               },
             },
           },
           tooltip: {
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            titleColor: '#1a1a1a',
-            bodyColor: '#4b5563',
-            borderColor: '#e5e7eb',
-            borderWidth: 1,
-            padding: 12,
-            cornerRadius: 8,
-            boxPadding: 6,
-            usePointStyle: true,
-            callbacks: {
-              label: (tooltipItem: TooltipItem<'line'>) => {
-                const value = tooltipItem.raw as number;
-                return `${tooltipItem.dataset.label}: R$ ${value.toLocaleString('pt-BR')}`;
+            mode: 'index',
+            intersect: false,
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            ticks: {
+              callback: value => {
+                return this.formatCurrency(Number(value));
+              },
+              font: {
+                size: 10,
+              },
+            },
+            grid: {
+              color: 'rgba(0, 0, 0, 0.05)',
+            },
+          },
+          x: {
+            grid: {
+              display: false,
+            },
+            ticks: {
+              font: {
+                size: 10,
               },
             },
           },
         },
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Ano',
-              padding: { top: 10 },
-              font: {
-                size: 13,
-                weight: 'bold',
-              },
-            },
-            grid: {
-              display: false,
-            },
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Valor (R$)',
-              padding: { bottom: 10 },
-              font: {
-                size: 13,
-                weight: 'bold',
-              },
-            },
-            ticks: {
-              callback: value => {
-                return `R$ ${this.formatNumberShort(value as number)}`;
-              },
-            },
-            grid: {
-              color: '#f3f4f6',
-            },
+        interaction: {
+          mode: 'nearest',
+          axis: 'x',
+          intersect: false,
+        },
+        elements: {
+          point: {
+            radius: 3,
+            hoverRadius: 5,
           },
         },
       },

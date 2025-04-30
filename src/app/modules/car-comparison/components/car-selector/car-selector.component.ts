@@ -110,6 +110,76 @@ export class CarSelectorComponent implements OnInit {
     );
   }
 
+  /**
+   * Mostra todas as opções de marcas ao clicar ou focar no input
+   */
+  public showBrandOptions(): void {
+    // Mostra todas as marcas disponíveis sem filtrar
+    this.filteredBrands = [...this.brands];
+    this.showBrandSuggestions = true;
+
+    // Fechar outros dropdowns quando este abrir
+    this.showModelSuggestions = false;
+    this.showYearSuggestions = false;
+
+    // Rola a página para o elemento se for mobile
+    if (this.isMobileDevice()) {
+      setTimeout(() => {
+        const element = document.querySelector('.dropdown-open') as HTMLElement;
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+    }
+  }
+
+  /**
+   * Mostra todas as opções de modelos ao clicar ou focar no input
+   */
+  public showModelOptions(): void {
+    // Mostra todos os modelos disponíveis sem filtrar
+    this.filteredModels = [...this.models];
+    this.showModelSuggestions = true;
+
+    // Fechar outros dropdowns quando este abrir
+    this.showBrandSuggestions = false;
+    this.showYearSuggestions = false;
+
+    // Rola a página para o elemento se for mobile
+    if (this.isMobileDevice()) {
+      setTimeout(() => {
+        const element = document.querySelector('.dropdown-open') as HTMLElement;
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+    }
+  }
+
+  /**
+   * Mostra todas as opções de anos ao clicar ou focar no input
+   */
+  public showYearOptions(): void {
+    // Mostra todos os anos disponíveis sem filtrar
+    this.filteredYears = [...this.years];
+    this.showYearSuggestions = true;
+
+    // Fechar outros dropdowns quando este abrir
+    this.showBrandSuggestions = false;
+    this.showModelSuggestions = false;
+
+    // Rola a página para o elemento se for mobile
+    if (this.isMobileDevice()) {
+      setTimeout(() => {
+        const element = document.querySelector('.dropdown-open') as HTMLElement;
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+    }
+  }
+
+  // Continua o método para filtrar as marcas, mas agora apenas para input
   public filterBrands(): void {
     if (this.brandSearch) {
       this.filteredBrands = this.brands.filter(brand =>
@@ -118,8 +188,15 @@ export class CarSelectorComponent implements OnInit {
     } else {
       this.filteredBrands = [...this.brands];
     }
+
+    this.showBrandSuggestions = true;
+
+    // Fechar outros dropdowns quando este abrir
+    this.showModelSuggestions = false;
+    this.showYearSuggestions = false;
   }
 
+  // Continua o método para filtrar os modelos, mas agora apenas para input
   public filterModels(): void {
     if (this.modelSearch) {
       this.filteredModels = this.models.filter(model =>
@@ -128,8 +205,15 @@ export class CarSelectorComponent implements OnInit {
     } else {
       this.filteredModels = [...this.models];
     }
+
+    this.showModelSuggestions = true;
+
+    // Fechar outros dropdowns quando este abrir
+    this.showBrandSuggestions = false;
+    this.showYearSuggestions = false;
   }
 
+  // Continua o método para filtrar os anos, mas agora apenas para input
   public filterYears(): void {
     if (this.yearSearch) {
       this.filteredYears = this.years.filter(year =>
@@ -138,24 +222,57 @@ export class CarSelectorComponent implements OnInit {
     } else {
       this.filteredYears = [...this.years];
     }
+
+    this.showYearSuggestions = true;
+
+    // Fechar outros dropdowns quando este abrir
+    this.showBrandSuggestions = false;
+    this.showModelSuggestions = false;
   }
 
   public selectBrand(brand: Brand): void {
     this.brandSearch = brand.nome;
     this.showBrandSuggestions = false;
-    this.onBrandSelect(brand.codigo);
+
+    // Primeiro, fechamos o dropdown para evitar problemas de sobreposição
+    setTimeout(() => {
+      this.onBrandSelect(brand.codigo);
+
+      // Ajuste para evitar o zoom em campos de entrada em dispositivos móveis
+      if (this.isMobileDevice()) {
+        document.activeElement instanceof HTMLElement && document.activeElement.blur();
+      }
+    }, 100);
   }
 
   public selectModel(model: Model): void {
     this.modelSearch = model.nome;
     this.showModelSuggestions = false;
-    this.onModelSelect(model.codigo);
+
+    // Primeiro, fechamos o dropdown para evitar problemas de sobreposição
+    setTimeout(() => {
+      this.onModelSelect(model.codigo);
+
+      // Ajuste para evitar o zoom em campos de entrada em dispositivos móveis
+      if (this.isMobileDevice()) {
+        document.activeElement instanceof HTMLElement && document.activeElement.blur();
+      }
+    }, 100);
   }
 
   public selectYear(year: Year): void {
     this.yearSearch = year.nome;
     this.showYearSuggestions = false;
-    this.onYearSelect(year.codigo);
+
+    // Primeiro, fechamos o dropdown para evitar problemas de sobreposição
+    setTimeout(() => {
+      this.onYearSelect(year.codigo);
+
+      // Ajuste para evitar o zoom em campos de entrada em dispositivos móveis
+      if (this.isMobileDevice()) {
+        document.activeElement instanceof HTMLElement && document.activeElement.blur();
+      }
+    }, 100);
   }
 
   public onBrandSelect(brandId: string, isRestoring: boolean = false): void {
@@ -169,6 +286,11 @@ export class CarSelectorComponent implements OnInit {
     this.modelSearch = '';
     this.yearSearch = '';
     this.error = '';
+
+    // Fechar todos os dropdowns
+    this.showBrandSuggestions = false;
+    this.showModelSuggestions = false;
+    this.showYearSuggestions = false;
 
     this.fipeService.getModels(brandId).subscribe(
       data => {
@@ -197,6 +319,11 @@ export class CarSelectorComponent implements OnInit {
     this.yearSearch = '';
     this.error = '';
 
+    // Fechar todos os dropdowns
+    this.showBrandSuggestions = false;
+    this.showModelSuggestions = false;
+    this.showYearSuggestions = false;
+
     this.fipeService.getYears(this.selectedBrand, modelId).subscribe(
       years => {
         this.years = years;
@@ -204,10 +331,13 @@ export class CarSelectorComponent implements OnInit {
 
         if (isRestoring && this.isRestoring) {
           const windowWithRestore = window as WindowWithRestoreData;
-          const savedYear = windowWithRestore.restoreData?.AnoModelo;
-          const yearItem = this.years.find(y => y.nome.includes(savedYear?.toString() || ''));
-          if (yearItem) {
-            this.onYearSelect(yearItem.codigo, true);
+          const savedYear = windowWithRestore.restoreData?.AnoModelo.toString();
+          if (savedYear) {
+            // Procure o código do ano correspondente
+            const yearObj = this.years.find(y => y.nome.includes(savedYear));
+            if (yearObj) {
+              this.onYearSelect(yearObj.codigo, true);
+            }
           }
         }
       },
@@ -251,15 +381,61 @@ export class CarSelectorComponent implements OnInit {
     return this.carLogoService.getLogoUrl(brand);
   }
 
-  /**
-   * Escuta cliques no documento para fechar os dropdowns
-   */
+  // Método para fechar todos os dropdowns quando clicar fora
   @HostListener('document:click', ['$event'])
   public clickOutside(event: MouseEvent): void {
-    if (!(event.target as HTMLElement).closest('.car-selector')) {
-      this.showBrandSuggestions = false;
-      this.showModelSuggestions = false;
-      this.showYearSuggestions = false;
+    const targetElement = event.target as HTMLElement;
+
+    // Para dispositivos móveis, deixamos o backdrop lidar com o fechamento
+    if (this.isMobileDevice()) {
+      // Apenas verificar se clicou em algum elemento de input
+      const clickedInInput = targetElement.closest('.search-input') !== null;
+
+      // Se clicou em um input, não fazemos nada
+      if (clickedInInput) {
+        return;
+      }
+
+      // Se clicou em algum outro elemento que não seja o dropdown ou seus filhos
+      if (
+        !targetElement.closest('.suggestions-container-mobile') &&
+        !targetElement.closest('.mobile-dropdown-header') &&
+        !targetElement.closest('.mobile-dropdown-content')
+      ) {
+        // Se não for um clique no botão de fechar, fechamos todos os dropdowns
+        if (!targetElement.closest('.mobile-dropdown-close')) {
+          this.closeAllDropdowns();
+        }
+      }
+    } else {
+      // Comportamento para desktop
+      const clickedInInput = targetElement.closest('.search-input') !== null;
+      const clickedInSuggestion = targetElement.closest('.suggestion-item') !== null;
+      const clickedInContainer = targetElement.closest('.suggestions-container') !== null;
+
+      // Se não clicou em nenhum elemento relevante, feche todos os dropdowns
+      if (!clickedInInput && !clickedInSuggestion && !clickedInContainer) {
+        this.closeAllDropdowns();
+      }
     }
+  }
+
+  // Método para verificar se a tela é mobile
+  public isMobileDevice(): boolean {
+    return window.innerWidth <= 768;
+  }
+
+  // Método para fechar todos os dropdowns
+  public closeAllDropdowns(): void {
+    this.showBrandSuggestions = false;
+    this.showModelSuggestions = false;
+    this.showYearSuggestions = false;
+  }
+
+  // Método para prevenir scroll do body quando o modal estiver aberto
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    // Atualiza o status de mobile/desktop ao redimensionar
+    this.closeAllDropdowns();
   }
 }

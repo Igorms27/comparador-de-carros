@@ -1,172 +1,178 @@
-<app-animated-background></app-animated-background>
+<div class="app-wrapper">
+  <app-animated-background></app-animated-background>
 
-<div class="container">
-  <h1 class="app-title">Comparador de Preços FIPE</h1>
+  <div class="container">
+    <h1 class="app-title">Comparador de Preços FIPE</h1>
 
-  <div class="history-button-container" *ngIf="hasHistory">
-    <button class="history-button" (click)="restoreLastComparison()">
-      <span class="icon">↺</span>
-      Restaurar última comparação
-    </button>
-  </div>
+    <div class="history-button-container" *ngIf="hasHistory">
+      <button class="history-button" (click)="restoreLastComparison()">
+        <span class="icon">↺</span>
+        Restaurar última comparação
+      </button>
+    </div>
 
-  <!-- Seção "Como funciona" -->
-  <div class="how-it-works">
-    <h2>Como usar o comparador</h2>
-    <div class="steps-container">
-      <div class="step">
-        <div class="step-number">1</div>
-        <div class="step-text">Selecione a marca e modelo do primeiro veículo</div>
+    <!-- Seção "Como funciona" -->
+    <div class="how-it-works">
+      <h2>Como usar o comparador</h2>
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-text">Selecione a marca e modelo do primeiro veículo</div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-text">Selecione a marca e modelo do segundo veículo</div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-text">Veja a comparação detalhada com gráficos de preços</div>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-number">2</div>
-        <div class="step-text">Selecione a marca e modelo do segundo veículo</div>
+    </div>
+
+    <!-- Seletores de veículos -->
+    <div class="selector-container">
+      <div class="selector-item">
+        <app-car-selector
+          title="Primeiro Veículo"
+          (carSelected)="onFirstCarSelected($event)"
+        ></app-car-selector>
       </div>
-      <div class="step">
-        <div class="step-number">3</div>
-        <div class="step-text">Veja a comparação detalhada com gráficos de preços</div>
+
+      <div class="selector-item">
+        <app-car-selector
+          title="Segundo Veículo"
+          (carSelected)="onSecondCarSelected($event)"
+        ></app-car-selector>
       </div>
+    </div>
+
+    <!-- Prévia do gráfico vazia -->
+    <div class="chart-preview" *ngIf="!firstCar || !secondCar">
+      <h2>Gráfico de Comparação</h2>
+      <div class="empty-chart">
+        <div class="chart-placeholder">
+          <span class="chart-icon">📊</span>
+          <p>Selecione dois veículos para visualizar o gráfico de comparação de preços</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparação de veículos -->
+    <div *ngIf="firstCar && secondCar">
+      <!-- Tabela de comparação -->
+      <div class="comparison-details">
+        <h2>Comparação dos Veículos</h2>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Característica</th>
+                <th>{{ firstCar.Marca }}</th>
+                <th>{{ secondCar.Marca }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Modelo</strong></td>
+                <td>{{ firstCar.Modelo }}</td>
+                <td>{{ secondCar.Modelo }}</td>
+              </tr>
+              <tr>
+                <td><strong>Ano</strong></td>
+                <td>{{ firstCar.AnoModelo }}</td>
+                <td>{{ secondCar.AnoModelo }}</td>
+              </tr>
+              <tr>
+                <td><strong>Preço</strong></td>
+                <td [style.color]="getValueColor(firstCar.Valor, secondCar.Valor)">
+                  {{ firstCar.Valor }}
+                </td>
+                <td [style.color]="getValueColor(secondCar.Valor, firstCar.Valor)">
+                  {{ secondCar.Valor }}
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Combustível</strong></td>
+                <td>{{ firstCar.Combustivel }}</td>
+                <td>{{ secondCar.Combustivel }}</td>
+              </tr>
+              <tr>
+                <td><strong>Código FIPE</strong></td>
+                <td>{{ firstCar.CodigoFipe }}</td>
+                <td>{{ secondCar.CodigoFipe }}</td>
+              </tr>
+              <tr>
+                <td><strong>Referência</strong></td>
+                <td>{{ firstCar.MesReferencia }}</td>
+                <td>{{ secondCar.MesReferencia }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Gráfico de comparação -->
+      <app-car-chart [firstCar]="firstCar" [secondCar]="secondCar"></app-car-chart>
+    </div>
+
+    <!-- Seção de dicas de compra -->
+    <div class="buying-tips">
+      <h2>Dicas para comprar seu carro</h2>
+      <div class="tips-container">
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <p>Compare a desvalorização dos modelos para fazer uma compra mais inteligente</p>
+        </div>
+        <div class="tip">
+          <span class="tip-icon">💰</span>
+          <p>Verifique o histórico de preços para identificar o melhor momento para comprar</p>
+        </div>
+        <div class="tip">
+          <span class="tip-icon">📊</span>
+          <p>Analise os gráficos para entender a tendência de valorização/desvalorização</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sobre a Tabela FIPE -->
+    <div class="fipe-info">
+      <h2>Sobre a Tabela FIPE</h2>
+      <p>
+        A Tabela FIPE expressa preços médios de veículos no mercado nacional, servindo como
+        referência para negociações ou avaliações. Os preços efetivos de compra e venda podem variar
+        devido a região, conservação, cor, acessórios ou qualquer outro fator relevante para a
+        negociação.
+      </p>
+      <a href="https://veiculos.fipe.org.br/" target="_blank" class="link-button">
+        Visitar site oficial FIPE
+      </a>
     </div>
   </div>
 
-  <div class="selector-container">
-    <div class="selector-item">
-      <app-car-selector
-        title="Primeiro Veículo"
-        (carSelected)="onFirstCarSelected($event)"
-      ></app-car-selector>
-    </div>
-
-    <div class="selector-item">
-      <app-car-selector
-        title="Segundo Veículo"
-        (carSelected)="onSecondCarSelected($event)"
-      ></app-car-selector>
-    </div>
+  <!-- Rodapé -->
+  <div class="footer-wrapper">
+    <footer class="app-footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Comparador de Preços FIPE</h3>
+          <p>
+            Ferramenta gratuita para comparação de preços de veículos baseados na tabela FIPE
+            oficial.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Links Úteis</h3>
+          <ul>
+            <li><a href="#">Sobre o projeto</a></li>
+            <li><a href="https://veiculos.fipe.org.br/" target="_blank">Tabela FIPE Oficial</a></li>
+            <li><a href="#">Política de Privacidade</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2023 Comparador FIPE - Desenvolvido por Igor Moreira</p>
+      </div>
+    </footer>
   </div>
-
-  <!-- Prévia do gráfico de comparação vazia -->
-  <div class="chart-preview" *ngIf="!firstCar || !secondCar">
-    <h2>Gráfico de Comparação</h2>
-    <div class="empty-chart">
-      <div class="chart-placeholder">
-        <span class="chart-icon">📊</span>
-        <p>Selecione dois veículos para visualizar o gráfico de comparação de preços</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tabela de comparação responsiva para mobile -->
-  <div class="comparison-details" *ngIf="firstCar && secondCar">
-    <h2>Comparação dos Veículos</h2>
-    <div class="table-responsive">
-      <table>
-        <tr>
-          <th>Característica</th>
-          <th>{{ firstCar.Marca }}</th>
-          <th>{{ secondCar.Marca }}</th>
-        </tr>
-        <tr>
-          <td><strong>Modelo</strong></td>
-          <td>{{ firstCar.Modelo }}</td>
-          <td>{{ secondCar.Modelo }}</td>
-        </tr>
-        <tr>
-          <td><strong>Ano</strong></td>
-          <td>{{ firstCar.AnoModelo }}</td>
-          <td>{{ secondCar.AnoModelo }}</td>
-        </tr>
-        <tr>
-          <td><strong>Preço</strong></td>
-          <td [style.color]="getValueColor(firstCar.Valor, secondCar.Valor)">
-            {{ firstCar.Valor }}
-          </td>
-          <td [style.color]="getValueColor(secondCar.Valor, firstCar.Valor)">
-            {{ secondCar.Valor }}
-          </td>
-        </tr>
-        <tr>
-          <td><strong>Combustível</strong></td>
-          <td>{{ firstCar.Combustivel }}</td>
-          <td>{{ secondCar.Combustivel }}</td>
-        </tr>
-        <tr>
-          <td><strong>Código FIPE</strong></td>
-          <td>{{ firstCar.CodigoFipe }}</td>
-          <td>{{ secondCar.CodigoFipe }}</td>
-        </tr>
-        <tr>
-          <td><strong>Mês Referência</strong></td>
-          <td>{{ firstCar.MesReferencia }}</td>
-          <td>{{ secondCar.MesReferencia }}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-
-  <app-car-chart
-    *ngIf="firstCar && secondCar"
-    [firstCar]="firstCar"
-    [secondCar]="secondCar"
-  ></app-car-chart>
-
-  <!-- Seção de dicas de compra -->
-  <div class="buying-tips">
-    <h2>Dicas para comprar seu carro</h2>
-    <div class="tips-container">
-      <div class="tip">
-        <span class="tip-icon">💡</span>
-        <p>Compare a desvalorização dos modelos para fazer uma compra mais inteligente</p>
-      </div>
-      <div class="tip">
-        <span class="tip-icon">💰</span>
-        <p>Verifique o histórico de preços para identificar o melhor momento para comprar</p>
-      </div>
-      <div class="tip">
-        <span class="tip-icon">📊</span>
-        <p>Analise os gráficos para entender a tendência de valorização/desvalorização</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Área informativa "Sobre a Tabela FIPE" -->
-  <div class="fipe-info">
-    <h2>Sobre a Tabela FIPE</h2>
-    <p>
-      A Tabela FIPE expressa preços médios de veículos no mercado nacional, servindo como referência
-      para negociações ou avaliações. Os preços efetivos de compra e venda podem variar devido a
-      região, conservação, cor, acessórios ou qualquer outro fator relevante para a negociação.
-    </p>
-    <a href="https://veiculos.fipe.org.br/" target="_blank" class="link-button"
-      >Visitar site oficial FIPE</a
-    >
-  </div>
-</div>
-
-<!-- Rodapé informativo -->
-<div
-  class="footer-wrapper"
-  style="margin-bottom: -5px; position: relative; width: 100vw; margin-left: calc(-50vw + 50%)"
->
-  <footer class="app-footer">
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>Comparador de Preços FIPE</h3>
-        <p>
-          Ferramenta gratuita para comparação de preços de veículos baseados na tabela FIPE oficial.
-        </p>
-      </div>
-      <div class="footer-section">
-        <h3>Links Úteis</h3>
-        <ul>
-          <li><a href="#">Sobre o projeto</a></li>
-          <li><a href="https://veiculos.fipe.org.br/" target="_blank">Tabela FIPE Oficial</a></li>
-          <li><a href="#">Política de Privacidade</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2023 Comparador FIPE - Desenvolvido por Igor Moreira</p>
-    </div>
-  </footer>
 </div>

@@ -1,9 +1,19 @@
 <div class="car-selector">
   <h3>{{ title }}</h3>
 
+  <!-- Backdrop para dispositivos móveis -->
+  <div
+    *ngIf="
+      isMobileDevice() && (showBrandSuggestions || showModelSuggestions || showYearSuggestions)
+    "
+    class="mobile-backdrop"
+    (click)="closeAllDropdowns()"
+  ></div>
+
   <div
     class="select-group"
     [class.dropdown-open]="showBrandSuggestions && filteredBrands.length > 0"
+    [class.mobile]="isMobileDevice()"
   >
     <label for="brandSearch">Marca do Veículo:</label>
     <div class="autocomplete-container">
@@ -15,24 +25,57 @@
             id="brandSearch"
             [(ngModel)]="brandSearch"
             (input)="filterBrands()"
-            (focus)="showBrandSuggestions = true"
+            (focus)="showBrandOptions()"
+            (click)="showBrandOptions()"
             placeholder="Digite a marca..."
             class="search-input"
             [class.with-logo]="selectedBrand"
+            autocomplete="off"
           />
         </div>
         <span class="search-icon">🔍</span>
       </div>
-      <div class="suggestions-container" *ngIf="showBrandSuggestions && filteredBrands.length > 0">
+
+      <!-- Dropdown para desktop -->
+      <div
+        *ngIf="!isMobileDevice() && showBrandSuggestions && filteredBrands.length > 0"
+        class="suggestions-container"
+        (click)="$event.stopPropagation()"
+      >
         <div
           *ngFor="let brand of filteredBrands"
           class="suggestion-item"
-          (click)="selectBrand(brand)"
+          (click)="selectBrand(brand); $event.stopPropagation()"
           [class.active]="brand.codigo === selectedBrand"
         >
           <div class="brand-item">
             <span class="car-icon">🚗</span>
             <span>{{ brand.nome }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dropdown para mobile -->
+      <div
+        *ngIf="isMobileDevice() && showBrandSuggestions && filteredBrands.length > 0"
+        class="suggestions-container-mobile"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="mobile-dropdown-header">
+          <div class="mobile-dropdown-title">Selecione a Marca</div>
+          <button class="mobile-dropdown-close" (click)="closeAllDropdowns()">✕</button>
+        </div>
+        <div class="mobile-dropdown-content">
+          <div
+            *ngFor="let brand of filteredBrands"
+            class="suggestion-item"
+            (click)="selectBrand(brand); $event.stopPropagation()"
+            [class.active]="brand.codigo === selectedBrand"
+          >
+            <div class="brand-item">
+              <span class="car-icon">🚗</span>
+              <span>{{ brand.nome }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -43,6 +86,7 @@
     class="select-group"
     *ngIf="selectedBrand"
     [class.dropdown-open]="showModelSuggestions && filteredModels.length > 0"
+    [class.mobile]="isMobileDevice()"
   >
     <label for="modelSearch">Modelo do Veículo:</label>
     <div class="autocomplete-container">
@@ -52,20 +96,50 @@
           id="modelSearch"
           [(ngModel)]="modelSearch"
           (input)="filterModels()"
-          (focus)="showModelSuggestions = true"
+          (focus)="showModelOptions()"
+          (click)="showModelOptions()"
           placeholder="Digite o modelo..."
           class="search-input"
+          autocomplete="off"
         />
         <span class="search-icon">🔍</span>
       </div>
-      <div class="suggestions-container" *ngIf="showModelSuggestions && filteredModels.length > 0">
+
+      <!-- Dropdown para desktop -->
+      <div
+        *ngIf="!isMobileDevice() && showModelSuggestions && filteredModels.length > 0"
+        class="suggestions-container"
+        (click)="$event.stopPropagation()"
+      >
         <div
           *ngFor="let model of filteredModels"
           class="suggestion-item"
-          (click)="selectModel(model)"
+          (click)="selectModel(model); $event.stopPropagation()"
           [class.active]="model.codigo === selectedModel"
         >
           {{ model.nome }}
+        </div>
+      </div>
+
+      <!-- Dropdown para mobile -->
+      <div
+        *ngIf="isMobileDevice() && showModelSuggestions && filteredModels.length > 0"
+        class="suggestions-container-mobile"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="mobile-dropdown-header">
+          <div class="mobile-dropdown-title">Selecione o Modelo</div>
+          <button class="mobile-dropdown-close" (click)="closeAllDropdowns()">✕</button>
+        </div>
+        <div class="mobile-dropdown-content">
+          <div
+            *ngFor="let model of filteredModels"
+            class="suggestion-item"
+            (click)="selectModel(model); $event.stopPropagation()"
+            [class.active]="model.codigo === selectedModel"
+          >
+            {{ model.nome }}
+          </div>
         </div>
       </div>
     </div>
@@ -75,6 +149,7 @@
     class="select-group"
     *ngIf="selectedModel"
     [class.dropdown-open]="showYearSuggestions && filteredYears.length > 0"
+    [class.mobile]="isMobileDevice()"
   >
     <label for="yearSearch">Ano do Veículo:</label>
     <div class="autocomplete-container">
@@ -84,20 +159,50 @@
           id="yearSearch"
           [(ngModel)]="yearSearch"
           (input)="filterYears()"
-          (focus)="showYearSuggestions = true"
+          (focus)="showYearOptions()"
+          (click)="showYearOptions()"
           placeholder="Digite o ano..."
           class="search-input"
+          autocomplete="off"
         />
         <span class="search-icon">🔍</span>
       </div>
-      <div class="suggestions-container" *ngIf="showYearSuggestions && filteredYears.length > 0">
+
+      <!-- Dropdown para desktop -->
+      <div
+        *ngIf="!isMobileDevice() && showYearSuggestions && filteredYears.length > 0"
+        class="suggestions-container"
+        (click)="$event.stopPropagation()"
+      >
         <div
           *ngFor="let year of filteredYears"
           class="suggestion-item"
-          (click)="selectYear(year)"
+          (click)="selectYear(year); $event.stopPropagation()"
           [class.active]="year.codigo === selectedYear"
         >
           {{ year.nome }}
+        </div>
+      </div>
+
+      <!-- Dropdown para mobile -->
+      <div
+        *ngIf="isMobileDevice() && showYearSuggestions && filteredYears.length > 0"
+        class="suggestions-container-mobile"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="mobile-dropdown-header">
+          <div class="mobile-dropdown-title">Selecione o Ano</div>
+          <button class="mobile-dropdown-close" (click)="closeAllDropdowns()">✕</button>
+        </div>
+        <div class="mobile-dropdown-content">
+          <div
+            *ngFor="let year of filteredYears"
+            class="suggestion-item"
+            (click)="selectYear(year); $event.stopPropagation()"
+            [class.active]="year.codigo === selectedYear"
+          >
+            {{ year.nome }}
+          </div>
         </div>
       </div>
     </div>

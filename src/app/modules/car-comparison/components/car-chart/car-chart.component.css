@@ -1,109 +1,229 @@
 .chart-container {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 2rem;
+  background: white !important;
+  padding: 1rem !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  max-width: 100% !important;
 }
 
 h3 {
-  color: #2563eb;
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  text-align: center;
+  color: #2563eb !important;
+  margin-top: 0 !important;
+  margin-bottom: 1rem !important;
+  font-size: 1.3rem !important;
+  text-align: center !important;
+  width: 100% !important;
 }
 
 canvas {
-  width: 100%;
-  height: 300px;
-  margin-top: 1rem;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 180px !important;
+  height: auto !important;
+  margin-top: 1rem !important;
+  box-sizing: border-box !important;
+  display: block !important;
 }
 
 .summary-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+  margin-bottom: 1.5rem !important;
+  width: 100% !important;
+  overflow: hidden !important;
 }
 
 .summary-card {
-  background: #f8fafc;
-  border-radius: 8px;
-  padding: 1.25rem;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border-left: 4px solid;
+  background: #f8fafc !important;
+  border-radius: 8px !important;
+  padding: 1rem !important;
+  text-align: center !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+  border-left: 4px solid !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
 }
 
 .first-car {
-  border-left-color: #2563eb;
+  border-left-color: #2563eb !important;
 }
 
 .second-car {
-  border-left-color: #16a34a;
+  border-left-color: #16a34a !important;
 }
 
 .depreciation-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
 }
 
 .depreciation-value {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #1a1a1a;
+  font-size: 2rem !important;
+  font-weight: bold !important;
+  color: #1a1a1a !important;
 }
 
 .depreciation-label {
-  font-size: 1rem;
-  color: #6b7280;
-  margin-bottom: 1rem;
+  font-size: 0.9rem !important;
+  color: #6b7280 !important;
+  margin-bottom: 1rem !important;
 }
 
 .price-comparison {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
-  flex-wrap: wrap;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  margin-top: 1rem !important;
+  width: 100% !important;
 }
 
 .price-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
 }
 
 .price-year {
-  font-weight: bold;
-  color: #4b5563;
-  font-size: 1.125rem;
+  font-weight: bold !important;
+  color: #4b5563 !important;
+  font-size: 1rem !important;
 }
 
 .price-value {
-  background: #e5e7eb;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  margin-top: 0.5rem;
-  font-weight: 500;
+  background: #e5e7eb !important;
+  padding: 0.4rem 0.8rem !important;
+  border-radius: 4px !important;
+  margin-top: 0.3rem !important;
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
 }
 
 .price-arrow {
-  font-size: 1.5rem;
-  color: #9ca3af;
-  margin: 0 0.5rem;
+  font-size: 1.3rem !important;
+  color: #9ca3af !important;
+  transform: rotate(90deg) !important;
+  margin: 0.3rem 0 !important;
 }
 
 .disclaimer {
-  text-align: center;
-  color: #6b7280;
-  font-size: 0.875rem;
-  font-style: italic;
-  margin: 1rem 0;
-  padding: 0.5rem;
-  background: #f8fafc;
-  border-radius: 6px;
+  text-align: center !important;
+  color: #6b7280 !important;
+  font-size: 0.8rem !important;
+  font-style: italic !important;
+  margin: 1rem 0 !important;
+  padding: 0.5rem !important;
+  background: #f8fafc !important;
+  border-radius: 6px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Media queries para telas maiores */
+@media (min-width: 768px) {
+  .chart-container {
+    padding: 1.5rem !important;
+  }
+
+  h3 {
+    font-size: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .summary-cards {
+    flex-direction: row !important;
+    gap: 1.5rem !important;
+  }
+
+  canvas {
+    min-height: 300px !important;
+  }
+
+  .price-comparison {
+    flex-direction: row !important;
+  }
+
+  .price-arrow {
+    transform: none !important;
+    margin: 0 0.5rem !important;
+  }
+
+  .depreciation-value {
+    font-size: 2.5rem !important;
+  }
+
+  .depreciation-label {
+    font-size: 1rem !important;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .chart-container {
+    padding: 1rem;
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+    width: 100% !important;
+  }
+
+  canvas {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 200px !important;
+  }
+
+  .price-comparison {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .price-arrow {
+    transform: rotate(90deg);
+    margin: 0.5rem 0;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-container {
+    padding: 0.75rem;
+  }
+
+  .summary-card {
+    padding: 0.75rem;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .depreciation-value {
+    font-size: 1.75rem;
+  }
+
+  .depreciation-label {
+    font-size: 0.85rem;
+  }
+
+  canvas {
+    min-height: 180px !important;
+  }
 }

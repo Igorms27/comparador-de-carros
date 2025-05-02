@@ -1,7 +1,7 @@
 <div class="app-wrapper">
   <app-animated-background></app-animated-background>
 
-  <div class="container">
+  <div class="container mobile-safe-area">
     <h1 class="app-title">Comparador de Preços FIPE</h1>
 
     <div class="history-button-container" *ngIf="hasHistory">
@@ -59,7 +59,7 @@
     </div>
 
     <!-- Comparação de veículos -->
-    <div *ngIf="firstCar && secondCar">
+    <div *ngIf="firstCar && secondCar" class="comparison-section">
       <!-- Tabela de comparação -->
       <div class="comparison-details">
         <h2>Comparação dos Veículos</h2>

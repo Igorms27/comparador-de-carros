@@ -16,6 +16,10 @@ import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angula
         height: 100vh;
         z-index: -1;
         pointer-events: none;
+        padding-top: env(
+          safe-area-inset-top,
+          0
+        ); /* Respeita a área segura em dispositivos móveis */
       }
     `,
   ],
@@ -47,8 +51,8 @@ export class AnimatedBackgroundComponent implements AfterViewInit {
   }
 
   private createParticles(): void {
-    // Usar a densidade para a viewport
-    const particleCount = window.innerWidth < 768 ? 40 : 80;
+    // Reduzir a densidade em dispositivos móveis para melhorar o desempenho
+    const particleCount = window.innerWidth < 768 ? 30 : 80;
     this.particles = [];
 
     for (let i = 0; i < particleCount; i++) {

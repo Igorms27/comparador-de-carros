@@ -62,6 +62,22 @@
         -moz-osx-font-smoothing: grayscale;
         overscroll-behavior: none;
         -webkit-overflow-scrolling: touch;
+        /* Ajuste para dispositivos iOS */
+        padding-top: env(safe-area-inset-top, 0) !important;
+      }
+
+      /* Ajuste para dispositivos iOS com notch */
+      @supports (padding-top: env(safe-area-inset-top)) {
+        body {
+          padding-top: env(safe-area-inset-top) !important;
+        }
+
+        /* Adiciona uma margem superior extra no iOS para evitar cortes */
+        .app-wrapper,
+        .container,
+        .app-title {
+          padding-top: max(16px, env(safe-area-inset-top)) !important;
+        }
       }
 
       app-root {

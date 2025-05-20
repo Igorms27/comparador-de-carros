@@ -1,19 +1,45 @@
-# 🚗 Comparador de Carros  
+# Comparador de Carros
 
-Um site desenvolvido em **Angular** para comparar modelos de carros, utilizando a **API da Tabela FIPE** para obter os valores atualizados dos veículos. Além disso, exibe um gráfico interativo mostrando a depreciação dos valores ao longo do tempo, utilizando **Chart.js**.  
+![Angular](https://img.shields.io/badge/Angular-19-DD0031?style=for-the-badge&logo=angular)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chart.js&logoColor=white)
+![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white)
 
-## 📌 Funcionalidades  
-✅ Comparação de dois carros lado a lado  
-✅ Exibição do **valor atual** dos modelos com base na Tabela FIPE  
-✅ **Gráfico interativo** de depreciação dos valores dos veículos  
-✅ Informações detalhadas sobre os carros selecionados  
-✅ Interface intuitiva e responsiva  
+Uma aplicação web desenvolvida em Angular para comparação visual de especificações e características de veículos, permitindo aos usuários tomar decisões mais informadas na hora de escolher um carro.
 
-## 🛠️ Tecnologias Utilizadas  
-- **Angular** → Estruturação e desenvolvimento do frontend  
-- **Chart.js** → Geração dos gráficos de depreciação  
-- **API da Tabela FIPE** → Obtenção dos valores atualizados dos veículos
+## 📋 Recursos
 
-## 🚀 Link do projeto
-- https://comparador-de-carros.pages.dev
+- Interface intuitiva para seleção de veículos
+- Visualização comparativa de especificações através de gráficos interativos
+- Comparação lado a lado de até 4 veículos simultaneamente
+- Análise detalhada de características como potência, consumo, dimensões e preço
+- Design responsivo para uso em dispositivos móveis e desktop
 
+## 🛠️ Tecnologias Utilizadas
+
+- **Framework**: Angular 19
+- **Estilização**: CSS nativo
+- **Visualização de Dados**: Chart.js e ng2-charts
+- **Hospedagem**: Cloudflare Workers
+- **Qualidade de Código**: ESLint, Prettier, Husky
+
+## 💻 Estrutura do Projeto
+
+```
+src/
+├── app/
+│   ├── core/              # Funcionalidades essenciais da aplicação
+│   │   ├── components/    # Componentes compartilhados
+│   │   ├── models/        # Interfaces e tipos
+│   │   └── services/      # Serviços globais
+│   └── modules/
+│       └── car-comparison/ # Módulo de comparação de carros
+│           └── components/
+│               ├── car-chart/    # Componente para exibição de gráficos
+│               └── car-selector/ # Componente para seleção de carros
+└── assets/                # Recursos estáticos (imagens, ícones, etc.)
+```
+
+## 📄 Licença
+
+Este projeto está licenciado sob a [Licença MIT](LICENSE).
